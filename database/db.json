@@ -1,0 +1,115 @@
+{
+  "services": {
+    "electrician": [
+      { "id": "e1", "name": "AC Maintenance/Repair", "price": 50, "duration": "1-2 Hours" },
+      { "id": "e2", "name": "Fridge/Freezer Repair", "price": 60, "duration": "2 Hours" },
+      { "id": "e3", "name": "Washing Machine Repair", "price": 45, "duration": "1.5 Hours" },
+      { "id": "e4", "name": "Switchboard Installation", "price": 25, "duration": "30 Mins" },
+      { "id": "e5", "name": "Whole House Rewiring", "price": 500, "duration": "1-2 Days" },
+      { "id": "e6", "name": "Generator Service", "price": 70, "duration": "2 Hours" },
+      { "id": "e7", "name": "UPS/Battery Repair", "price": 40, "duration": "1 Hour" },
+      { "id": "e8", "name": "Fan Installation", "price": 20, "duration": "30 Mins" },
+      { "id": "e9", "name": "LCD/TV Mounting", "price": 15, "duration": "30 Mins" },
+      { "id": "e10", "name": "Microwave Oven Repair", "price": 30, "duration": "1 Hour" }
+    ],
+    "plumber": [
+      { "id": "p1", "name": "Leakage Detection & Fix", "price": 35, "duration": "1 Hour" },
+      { "id": "p2", "name": "Geyser Installation", "price": 80, "duration": "2 Hours" },
+      { "id": "p3", "name": "Tap & Shower Repair", "price": 20, "duration": "30 Mins" },
+      { "id": "p4", "name": "Water Tank Cleaning", "price": 45, "duration": "2-3 Hours" },
+      { "id": "p5", "name": "Drain Blockage Cleaning", "price": 30, "duration": "1 Hour" }
+    ],
+    "carpenter": [
+      { "id": "c1", "name": "Door Lock Replacement", "price": 25, "duration": "45 Mins" },
+      { "id": "c2", "name": "Cabinet Repair", "price": 40, "duration": "1.5 Hours" },
+      { "id": "c3", "name": "Furniture Polishing", "price": 100, "duration": "3-4 Hours" },
+      { "id": "c4", "name": "Window Frame Fixing", "price": 35, "duration": "1 Hour" },
+      { "id": "c5", "name": "Sofa/Bed Repair", "price": 75, "duration": "2-3 Hours" }
+    ]
+  },
+  "technicians": [
+    {
+      "id": "t1",
+      "name": "Naveed Almas",
+      "category": "electrician",
+      "rating": 4.9,
+      "reviews": 128,
+      "status": "Available",
+      "avatar": "/images/naveed.png",
+      "bio": "Certified industrial electrician with 8+ years of experience in smart-home upgrades and household wiring."
+    },
+    {
+      "id": "t2",
+      "name": "Luqman Siddiqui",
+      "category": "plumber",
+      "rating": 4.8,
+      "reviews": 95,
+      "status": "Available",
+      "avatar": "/images/luqman.png",
+      "bio": "Expert in sanitary fittings, pressure leak solutions, and standard geyser maintenance."
+    },
+    {
+      "id": "t3",
+      "name": "Ali Akbar",
+      "category": "carpenter",
+      "rating": 4.7,
+      "reviews": 82,
+      "status": "Available",
+      "avatar": "/images/akbar.png",
+      "bio": "Specialist in fine wood furniture repair, cabinet manufacturing, and dynamic lock repairs."
+    },
+    {
+      "id": "t4",
+      "name": "Abdullah Tahir",
+      "category": "electrician",
+      "rating": 4.9,
+      "reviews": 110,
+      "status": "Available",
+      "avatar": "/images/abdullah.png",
+      "bio": "Expert home appliance repairman specializing in AC installation, fridge repairs, and electronic maintenance."
+    }
+  ],
+  "bookings": [
+    {
+      "id": "b_initial_1",
+      "category": "electrician",
+      "taskName": "AC Maintenance/Repair",
+      "price": 50,
+      "technician": "Naveed Almas",
+      "date": "2026-05-20",
+      "timeSlot": "10:00 AM - 12:00 PM",
+      "status": "Completed",
+      "createdAt": "2026-05-19T10:15:00.000Z"
+    },
+    {
+      "id": "b_initial_2",
+      "category": "plumber",
+      "taskName": "Leakage Detection & Fix",
+      "price": 35,
+      "technician": "Luqman Siddiqui",
+      "date": "2026-05-24",
+      "timeSlot": "02:00 PM - 03:30 PM",
+      "status": "Assigned",
+      "createdAt": "2026-05-22T14:30:00.000Z"
+    }
+  ],
+  "budget": [
+    { "id": "bd1", "item": "AC Installation & Service", "category": "Electrician", "allocated": 300, "spent": 50, "status": "In Progress" },
+    { "id": "bd2", "item": "Kitchen Plumbing Remodel", "category": "Plumber", "allocated": 500, "spent": 350, "status": "Completed" },
+    { "id": "bd3", "item": "Custom Wardrobe Cabinets", "category": "Carpenter", "allocated": 1200, "spent": 0, "status": "Planned" },
+    { "id": "bd4", "item": "Living Room Sofa Polish", "category": "Carpenter", "allocated": 200, "spent": 150, "status": "Completed" }
+  ],
+  "chats": {
+    "t1": [
+      { "sender": "technician", "text": "Hello! I am Naveed Almas, your assigned electrician. How can I help you with your AC today?", "time": "2026-05-20T09:30:00.000Z" },
+      { "sender": "user", "text": "Hi Naveed! It's making a strange humming sound when it starts.", "time": "2026-05-20T09:32:00.000Z" },
+      { "sender": "technician", "text": "Got it. That's usually a capacitor issue or fan motor block. I'll inspect it during our scheduled slot.", "time": "2026-05-20T09:33:00.000Z" }
+    ],
+    "t2": [
+      { "sender": "technician", "text": "Hi there! I am Luqman. I see we have a tap leakage fix tomorrow at 2:00 PM. Please confirm the address is correct.", "time": "2026-05-22T15:00:00.000Z" },
+      { "sender": "user", "text": "Yes, the address is exactly correct. Thank you!", "time": "2026-05-22T15:10:00.000Z" }
+    ],
+    "t3": [],
+    "t4": []
+  }
+}

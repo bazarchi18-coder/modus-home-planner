@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Dynamic viewport optimized for notch/Dynamic Island overlays -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Modus</title>
+  
+  <!-- iOS PWA Standalone Mode Meta Tags -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Modus">
+  <link rel="apple-touch-icon" href="/images/icon.png">
+  
+  <!-- Web App Manifest -->
+  <link rel="manifest" href="/manifest.json">
+  
+  <!-- Premium Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="light-theme">
+  <!-- Standalone Status Bar Guard (Safe area fill for iOS) -->
+  <div class="ios-status-bar-guard"></div>
+
+  <!-- Main Standalone Container -->
+  <div class="app-container">
+    
+    <!-- HEADER (Persistent for top navigation) -->
+    <header class="app-header">
+      <div class="header-content">
+        <div class="brand">
+          <img src="/images/icon.png" alt="Modus Logo" class="header-logo">
+          <h1 class="brand-title">Modus</h1>
+        </div>
+        <button id="theme-toggle" class="header-action-btn" aria-label="Toggle Theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- CONTENT VIEWS (Single Page Application Layout) -->
+    <main class="view-content">
+      
+      <!-- 1. HOME VIEW -->
+      <section id="home-view" class="app-view active">
+        <div class="welcome-banner">
+          <span class="greeting-subtitle">Your Smart Home Assistant</span>
+          <h2 class="greeting-title">Hello, Luqman</h2>
+        </div>
+
+        <!-- Dashboard Metrics Row -->
+        <div class="dashboard-metrics">
+          <div class="metric-card active-bookings-card" onclick="switchTab('orders')">
+            <div class="metric-icon-bg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <div class="metric-info">
+              <span class="metric-label">Active Orders</span>
+              <span id="active-bookings-count" class="metric-value">0</span>
+            </div>
+          </div>
+          <div class="metric-card budget-summary-card" onclick="switchTab('budget')">
+            <div class="metric-icon-bg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.21 15.89A10 10 0 1 1 8 2.83M22 12A10 10 0 0 0 12 2v10Z"/></svg>
+            </div>
+            <div class="metric-info">
+              <span class="metric-label">Renovation Spent</span>
+              <span id="budget-spent-percentage" class="metric-value">0%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Budget Gauge Sub-Card -->
+        <div class="dashboard-progress-widget" onclick="switchTab('budget')">
+          <div class="progress-widget-header">
+            <h4>Total Renovation Budget</h4>
+            <span id="budget-fraction">$0 / $0</span>
+          </div>
+          <div class="progress-bar-container">
+            <div id="dashboard-budget-bar" class="progress-bar" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <!-- Service Quick Book Section -->
+        <div class="section-container">
+          <h3 class="section-title">Book a Service</h3>
+          <div class="category-grid">
+            <div class="category-card electrician-bg" onclick="startBookingFlow('electrician')">
+              <div class="category-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              </div>
+              <h4>Electrician</h4>
+              <p>Wiring & AC services</p>
+            </div>
+            <div class="category-card plumber-bg" onclick="startBookingFlow('plumber')">
+              <div class="category-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22a7 7 0 0 0 7-7c0-4.3-7-11-7-11S5 10.7 5 15a7 7 0 0 0 7 7z"/></svg>
+              </div>
+              <h4>Plumber</h4>
+              <p>Piping & leak fixes</p>
+            </div>
+            <div class="category-card carpenter-bg" onclick="startBookingFlow('carpenter')">
+              <div class="category-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.77 3.77z"/></svg>
+              </div>
+              <h4>Carpenter</h4>
+              <p>Cabinetry & woodwork</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- System Objectives / Fast Support Info -->
+        <div class="info-banner">
+          <div class="info-banner-icon">🛡️</div>
+          <div class="info-banner-text">
+            <h5>Transparent Standardized Pricing</h5>
+            <p>Every service task is pre-priced according to standard industry rate cards. No hidden surprises!</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. BOOKING WIZARD VIEW -->
+      <section id="book-view" class="app-view">
+        <!-- Wizard Flow Navigation Header -->
+        <div class="wizard-nav-header">
+          <button id="wizard-back-btn" class="ios-back-btn" onclick="prevBookingStep()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+            Back
+          </button>
+          <h3 id="wizard-title" class="wizard-view-title">New Booking</h3>
+          <div class="step-indicator"><span id="current-step-num">1</span>/5</div>
+        </div>
+
+        <!-- Step Progress Bar -->
+        <div class="wizard-progress-bar-container">
+          <div id="wizard-progress-fill" class="wizard-progress-fill" style="width: 20%;"></div>
+        </div>
+
+        <!-- STEP CONTENT WRAPPERS -->
+        <div class="wizard-steps-container">
+          
+          <!-- Step 1: Select Service Category -->
+          <div id="booking-step-1" class="wizard-step active">
+            <h4 class="step-headline">What kind of expert do you need?</h4>
+            <div class="step-options-vertical">
+              <div class="select-option-item" onclick="selectBookingCategory('electrician')">
+                <div class="option-icon-prefix electrician-bg">⚡</div>
+                <div class="option-details">
+                  <h5>Electrician</h5>
+                  <p>AC repair, rewiring, generator, lighting installation</p>
+                </div>
+                <div class="option-arrow">➔</div>
+              </div>
+              <div class="select-option-item" onclick="selectBookingCategory('plumber')">
+                <div class="option-icon-prefix plumber-bg">💧</div>
+                <div class="option-details">
+                  <h5>Plumber</h5>
+                  <p>Geyser, pipeline leaks, tap fixes, tank cleaning</p>
+                </div>
+                <div class="option-arrow">➔</div>
+              </div>
+              <div class="select-option-item" onclick="selectBookingCategory('carpenter')">
+                <div class="option-icon-prefix carpenter-bg">🔨</div>
+                <div class="option-details">
+                  <h5>Carpenter</h5>
+                  <p>Locks replacement, cabinet repairs, sofas, frame repairs</p>
+                </div>
+                <div class="option-arrow">➔</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2: Select Specific Task -->
+          <div id="booking-step-2" class="wizard-step">
+            <h4 class="step-headline">Select standard service task</h4>
+            <p class="step-subheadline">Standardized rate card applied</p>
+            <div id="tasks-list" class="tasks-option-list">
+              <!-- Dynamically populated from JS -->
+            </div>
+          </div>
+
+          <!-- Step 3: Choose Professional Technician -->
+          <div id="booking-step-3" class="wizard-step">
+            <h4 class="step-headline">Choose a verified expert</h4>
+            <div id="technicians-list" class="technicians-option-list">
+              <!-- Dynamically populated from JS -->
+            </div>
+          </div>
+
+          <!-- Step 4: Choose Date and Time Slot -->
+          <div id="booking-step-4" class="wizard-step">
+            <h4 class="step-headline">Schedule your service</h4>
+            <div class="scheduler-container">
+              <div class="form-group">
+                <label for="booking-date" class="ios-input-label">Select Date</label>
+                <input type="date" id="booking-date" class="ios-date-input">
+              </div>
+              <div class="form-group">
+                <label class="ios-input-label">Available Time Slots</label>
+                <div class="time-chips-grid">
+                  <div class="time-chip" onclick="selectTimeSlot('09:00 AM - 11:00 AM', this)">09:00 AM - 11:00 AM</div>
+                  <div class="time-chip" onclick="selectTimeSlot('11:00 AM - 01:00 PM', this)">11:00 AM - 01:00 PM</div>
+                  <div class="time-chip" onclick="selectTimeSlot('02:00 PM - 04:00 PM', this)">02:00 PM - 04:00 PM</div>
+                  <div class="time-chip" onclick="selectTimeSlot('04:00 PM - 06:00 PM', this)">04:00 PM - 06:00 PM</div>
+                  <div class="time-chip" onclick="selectTimeSlot('06:00 PM - 08:00 PM', this)">06:00 PM - 08:00 PM</div>
+                </div>
+              </div>
+            </div>
+            
+            <button id="step-4-next-btn" class="ios-action-btn primary" onclick="nextBookingStep()" disabled>Continue to Summary</button>
+          </div>
+
+          <!-- Step 5: Final Review & Confirm -->
+          <div id="booking-step-5" class="wizard-step">
+            <h4 class="step-headline">Review and Confirm Booking</h4>
+            <div class="review-card">
+              <div class="review-row">
+                <span class="review-label">Service Category</span>
+                <span id="review-category" class="review-value capitalize">Electrician</span>
+              </div>
+              <div class="review-row">
+                <span class="review-label">Task Selected</span>
+                <span id="review-task" class="review-value">AC Maintenance/Repair</span>
+              </div>
+              <div class="review-row">
+                <span class="review-label">Assigned Expert</span>
+                <div class="review-tech-badge">
+                  <img id="review-tech-img" src="/images/naveed.png" alt="Tech" class="review-tech-avatar">
+                  <span id="review-tech-name" class="review-value">Naveed Almas</span>
+                </div>
+              </div>
+              <div class="review-row">
+                <span class="review-label">Scheduled Date</span>
+                <span id="review-date" class="review-value">2026-05-24</span>
+              </div>
+              <div class="review-row">
+                <span class="review-label">Time Slot</span>
+                <span id="review-time" class="review-value">10:00 AM - 12:00 PM</span>
+              </div>
+              
+              <hr class="review-divider">
+              
+              <div class="review-row total-row">
+                <span class="review-label">Total Pre-priced Fee</span>
+                <span id="review-price" class="review-total-value">$50.00</span>
+              </div>
+            </div>
+
+            <div class="info-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="info-box-icon"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+              <p>You will pay cash or card directly to the technician only after successful completion of the job.</p>
+            </div>
+
+            <button class="ios-action-btn primary confirm-btn" onclick="submitBooking()">
+              <span>Confirm & Book Service</span>
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 3. ORDERS VIEW -->
+      <section id="orders-view" class="app-view">
+        <div class="view-header">
+          <h2 class="view-title">Service Orders</h2>
+          <p class="view-subtitle">Track live bookings and history</p>
+        </div>
+
+        <div id="orders-container" class="orders-list">
+          <!-- Dynamically populated from JS -->
+        </div>
+      </section>
+
+      <!-- 4. BUDGET PLANNER VIEW -->
+      <section id="budget-view" class="app-view">
+        <div class="view-header">
+          <h2 class="view-title">Renovation Budget</h2>
+          <p class="view-subtitle">Plan and monitor project finances</p>
+        </div>
+
+        <!-- Consolidated Budget Ring Widget -->
+        <div class="budget-gauge-card">
+          <div class="gauge-ring-container">
+            <!-- Custom SVG Circular Progress Meter -->
+            <svg class="progress-ring" width="120" height="120">
+              <circle class="progress-ring-bg" stroke="rgba(255,255,255,0.15)" stroke-width="8" fill="transparent" r="50" cx="60" cy="60" />
+              <circle id="budget-svg-circle" class="progress-ring-fill" stroke="white" stroke-width="10" stroke-linecap="round" fill="transparent" r="50" cx="60" cy="60" stroke-dasharray="314.15" stroke-dashoffset="314.15" />
+            </svg>
+            <div class="gauge-center-text">
+              <span id="budget-percentage-text" class="percentage">0%</span>
+              <span class="label">Spent</span>
+            </div>
+          </div>
+          <div class="gauge-details">
+            <div class="gauge-detail-col">
+              <span class="lbl">Total Allocated</span>
+              <span id="budget-total-allocated" class="val">$0</span>
+            </div>
+            <div class="gauge-vertical-divider"></div>
+            <div class="gauge-detail-col">
+              <span class="lbl">Total Spent</span>
+              <span id="budget-total-spent" class="val">$0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add Budget Item trigger -->
+        <div class="add-budget-container">
+          <button class="ios-action-btn secondary add-item-trigger-btn" onclick="toggleBudgetForm(true)">
+            <span>+ Add Renovation Task Budget</span>
+          </button>
+        </div>
+
+        <!-- Add/Edit Budget Form Container (Collapsible) -->
+        <div id="budget-form-overlay" class="budget-form-card" style="display: none;">
+          <div class="card-header-row">
+            <h4 id="budget-form-title">New Budget Allocation</h4>
+            <button class="close-card-btn" onclick="toggleBudgetForm(false)">×</button>
+          </div>
+          <form id="budget-item-form" onsubmit="saveBudgetItem(event)">
+            <input type="hidden" id="budget-item-id">
+            
+            <div class="form-group">
+              <label for="budget-item-name" class="ios-input-label">Project / Task Item</label>
+              <input type="text" id="budget-item-name" class="ios-text-input" placeholder="e.g. Bathroom Tiling, Kitchen Rewiring" required>
+            </div>
+            
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="budget-item-category" class="ios-input-label">Category</label>
+                <select id="budget-item-category" class="ios-select-input" required>
+                  <option value="Electrician">Electrician</option>
+                  <option value="Plumber">Plumber</option>
+                  <option value="Carpenter">Carpenter</option>
+                  <option value="General">General / Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="budget-item-status" class="ios-input-label">Status</label>
+                <select id="budget-item-status" class="ios-select-input" required>
+                  <option value="Planned">Planned</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="budget-item-allocated" class="ios-input-label">Allocated ($)</label>
+                <input type="number" id="budget-item-allocated" class="ios-text-input" placeholder="0" min="0" required>
+              </div>
+              <div class="form-group">
+                <label for="budget-item-spent" class="ios-input-label">Spent so far ($)</label>
+                <input type="number" id="budget-item-spent" class="ios-text-input" placeholder="0" min="0" required>
+              </div>
+            </div>
+
+            <button type="submit" class="ios-action-btn primary form-save-btn">Save Allocation</button>
+          </form>
+        </div>
+
+        <!-- Budget Itemizer List -->
+        <div class="section-container">
+          <h3 class="section-title">Itemized Allocations</h3>
+          <div id="budget-items-list" class="budget-items-vertical-list">
+            <!-- Dynamically populated from JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. CHAT LIST & MESSAGING VIEW -->
+      <section id="chat-view" class="app-view">
+        <!-- SPA Sub-routing (Chat Room vs Chat List) -->
+        <div id="chat-master-container" class="chat-subview active">
+          <div class="view-header">
+            <h2 class="view-title">Modus Messages</h2>
+            <p class="view-subtitle">Chat with assigned professional experts</p>
+          </div>
+          <div id="chats-threads-list" class="chat-threads-vertical-list">
+            <!-- Dynamically populated from JS -->
+          </div>
+        </div>
+
+        <div id="chat-room-container" class="chat-subview">
+          <div class="chat-room-header">
+            <button class="chat-back-btn" onclick="closeChatRoom()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <div class="chat-recipient-profile">
+              <img id="chat-recipient-avatar" src="/images/naveed.png" alt="Tech avatar" class="chat-recipient-avatar">
+              <div class="chat-recipient-meta">
+                <h4 id="chat-recipient-name">Naveed Almas</h4>
+                <span id="chat-recipient-status" class="online-indicator">Online</span>
+              </div>
+            </div>
+          </div>
+
+          <div id="chat-messages-scroller" class="chat-messages-area">
+            <!-- Messages bubbles load dynamically -->
+          </div>
+
+          <form id="chat-message-form" class="chat-input-bar" onsubmit="sendChatMessage(event)">
+            <input type="text" id="chat-message-input" class="chat-input-field" placeholder="Type a message..." autocomplete="off">
+            <button type="submit" class="chat-send-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+            </button>
+          </form>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER TAB BAR (iOS Navigation HIG) -->
+    <nav class="ios-tab-bar">
+      <div class="tab-item active" onclick="switchTab('home', this)">
+        <div class="tab-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <span class="tab-label">Home</span>
+      </div>
+      
+      <div class="tab-item" onclick="switchTab('book', this)">
+        <div class="tab-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <span class="tab-label">Book</span>
+      </div>
+
+      <div class="tab-item" onclick="switchTab('orders', this)">
+        <div class="tab-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <span class="tab-label">Orders</span>
+      </div>
+
+      <div class="tab-item" onclick="switchTab('budget', this)">
+        <div class="tab-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <span class="tab-label">Budget</span>
+      </div>
+
+      <div class="tab-item" onclick="switchTab('chat', this)">
+        <div class="tab-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <span class="tab-label">Chat</span>
+      </div>
+    </nav>
+
+  </div>
+
+  <!-- Core App Logics Script -->
+  <script src="/js/app.js"></script>
+</body>
+</html>

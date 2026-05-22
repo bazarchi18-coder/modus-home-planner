@@ -1,0 +1,18 @@
+{
+  "name": "Modus",
+  "short_name": "Modus",
+  "description": "Modus - Premium Home Maintenance & Renovation Planner",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#054A3B",
+  "theme_color": "#054A3B",
+  "icons": [
+    {
+      "src": "/images/icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

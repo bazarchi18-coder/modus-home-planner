@@ -1,0 +1,25 @@
+{
+  "name": "home-renovation-planner",
+  "version": "1.0.0",
+  "description": "Premium iOS-style mobile web application for booking home services and tracking renovation budgets",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "pwa",
+    "ios",
+    "renovation-planner",
+    "express",
+    "service-booking"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
