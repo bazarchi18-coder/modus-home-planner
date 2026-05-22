@@ -854,19 +854,25 @@ function initializeGoogleSignIn() {
 // Handler for verified Google JWT response
 async function handleCredentialResponse(response) {
   try {
-    const payload = parseJwt(response.credential);
+    const rawSessionToken = response.credential; // Secure Google JWT ID Token
+    const payload = parseJwt(rawSessionToken);
     const userData = {
       name: payload.name,
       email: payload.email,
       avatar: payload.picture,
-      isLoggedIn: true
+      isLoggedIn: true,
+      sessionToken: rawSessionToken
     };
     
-    // 1. Persist Google User Information on the Server-side Database (db.json)
+    // 1. Persist Google User Information & Session Token on the Server-side Database (db.json)
     await fetchAPI('/api/auth/login', 'POST', userData);
     
     // 2. Save locally for offline PWA session persistence
     localStorage.setItem('modus-user', JSON.stringify(userData));
+    localStorage.setItem('modus-session-token', rawSessionToken);
+    
+    console.log("🔑 [Session Token] Successfully fetched Google JWT ID Token:", rawSessionToken);
+    
     applyUserProfile(userData);
     
     // Smooth transition splash screen out
@@ -900,21 +906,27 @@ function applyUserProfile(userData) {
 }
 
 async function bypassLogin() {
+  const mockToken = 'mock_session_token_guest_' + Math.random().toString(36).substring(2, 15);
   const guestData = {
     name: 'Guest User',
     email: 'guest@modus.com',
     avatar: '/images/icon.png',
-    isLoggedIn: true
+    isLoggedIn: true,
+    sessionToken: mockToken
   };
   
   try {
-    // Persist Guest login in server database
+    // Persist Guest login & Mock Session Token in server database
     await fetchAPI('/api/auth/login', 'POST', guestData);
   } catch (e) {
     console.warn("Server login offline, bypassing to local offline mode.");
   }
   
   localStorage.setItem('modus-user', JSON.stringify(guestData));
+  localStorage.setItem('modus-session-token', mockToken);
+  
+  console.log("🔑 [Session Token] Generated guest mock session token:", mockToken);
+  
   applyUserProfile(guestData);
   hideLoginGate();
 }
@@ -944,6 +956,7 @@ async function handleSignOut() {
   }
   
   localStorage.removeItem('modus-user');
+  localStorage.removeItem('modus-session-token');
   toggleSignOutPanel();
   showLoginGate();
 }

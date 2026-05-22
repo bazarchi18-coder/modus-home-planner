@@ -36,7 +36,7 @@ function writeDB(data) {
 
 // 0. User Authentication & Login Persistence
 app.post('/api/auth/login', (req, res) => {
-  const { name, email, avatar } = req.body;
+  const { name, email, avatar, sessionToken } = req.body;
   if (!name || !email) {
     return res.status(400).json({ error: "Missing name or email" });
   }
@@ -53,6 +53,7 @@ app.post('/api/auth/login', (req, res) => {
       name,
       email,
       avatar: avatar || '/images/icon.png',
+      sessionToken: sessionToken || null,
       createdAt: new Date().toISOString()
     };
     db.users.push(user);
@@ -60,6 +61,7 @@ app.post('/api/auth/login', (req, res) => {
   } else {
     user.name = name;
     user.avatar = avatar || user.avatar;
+    user.sessionToken = sessionToken || user.sessionToken;
     user.lastLoginAt = new Date().toISOString();
     console.log(`👤 [Google Auth] Active login session for: ${name} (${email})`);
   }
@@ -70,6 +72,7 @@ app.post('/api/auth/login', (req, res) => {
     name: user.name,
     email: user.email,
     avatar: user.avatar,
+    sessionToken: user.sessionToken,
     loginTime: new Date().toISOString()
   };
 
