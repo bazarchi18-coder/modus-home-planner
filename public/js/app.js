@@ -200,7 +200,7 @@ function renderHomeDashboard() {
   
   // Update dashboard visual elements
   document.getElementById('budget-spent-percentage').textContent = `${spentPercentage}%`;
-  document.getElementById('budget-fraction').textContent = `$${totalSpent.toLocaleString()} / $${totalAllocated.toLocaleString()}`;
+  document.getElementById('budget-fraction').textContent = `Rs. ${totalSpent.toLocaleString()} / Rs. ${totalAllocated.toLocaleString()}`;
   
   const dashboardBar = document.getElementById('dashboard-budget-bar');
   dashboardBar.style.width = `${Math.min(spentPercentage, 100)}%`;
@@ -312,7 +312,7 @@ function selectBookingCategory(category) {
         <span class="task-item-duration">⏱️ Duration: ${task.duration}</span>
       </div>
       <div class="task-item-right">
-        <span class="task-item-price">$${task.price}</span>
+        <span class="task-item-price">Rs. ${task.price.toLocaleString()}</span>
         <div class="task-checkbox-ring"></div>
       </div>
     `;
@@ -411,7 +411,7 @@ function populateStep5Review() {
   document.getElementById('review-task').textContent = appState.bookingFlow.taskName;
   document.getElementById('review-date').textContent = appState.bookingFlow.date;
   document.getElementById('review-time').textContent = appState.bookingFlow.timeSlot;
-  document.getElementById('review-price').textContent = `$${appState.bookingFlow.price.toFixed(2)}`;
+  document.getElementById('review-price').textContent = `Rs. ${appState.bookingFlow.price.toLocaleString()}`;
 
   // Find technician details
   const tech = appState.technicians.find(t => t.id === appState.bookingFlow.technicianId);
@@ -509,7 +509,7 @@ function renderOrdersTab() {
 
       <div class="order-card-footer">
         <span class="order-price-label">Pre-priced Fee:</span>
-        <span class="order-price-val">$${booking.price.toFixed(2)}</span>
+        <span class="order-price-val">Rs. ${booking.price.toLocaleString()}</span>
       </div>
     `;
     container.appendChild(card);
@@ -539,8 +539,8 @@ function renderBudgetTab() {
 
   // Update text elements
   document.getElementById('budget-percentage-text').textContent = `${percentage}%`;
-  document.getElementById('budget-total-allocated').textContent = `$${allocatedSum.toLocaleString()}`;
-  document.getElementById('budget-total-spent').textContent = `$${spentSum.toLocaleString()}`;
+  document.getElementById('budget-total-allocated').textContent = `Rs. ${allocatedSum.toLocaleString()}`;
+  document.getElementById('budget-total-spent').textContent = `Rs. ${spentSum.toLocaleString()}`;
 
   // Animate dynamic Circular SVG stroke
   const circle = document.getElementById('budget-svg-circle');
@@ -585,8 +585,8 @@ function renderBudgetTab() {
         </div>
         <div class="budget-item-right">
           <div class="budget-item-finances">
-            <span class="budget-item-spent-val">$${item.spent.toLocaleString()}</span>
-            <span class="budget-item-alloc-val">allocated: $${item.allocated.toLocaleString()}</span>
+            <span class="budget-item-spent-val">Rs. ${item.spent.toLocaleString()}</span>
+            <span class="budget-item-alloc-val">allocated: Rs. ${item.allocated.toLocaleString()}</span>
           </div>
           <button class="budget-action-btn" onclick="deleteBudgetItem('${item.id}')" aria-label="Delete budget item">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
@@ -830,8 +830,8 @@ function initializeGoogleSignIn() {
   }
   
   google.accounts.id.initialize({
-    // Standard Project Sandbox Client ID
-    client_id: '957864096057-clt110v45791oipqshn91tcrbfj2fep2.apps.googleusercontent.com',
+    // User's custom Google OAuth Client ID
+    client_id: '969080679405-n6ukdbu73gc74bsqorih167k28jtsqm2.apps.googleusercontent.com',
     callback: handleCredentialResponse,
     auto_select: false,
     cancel_on_tap_outside: true

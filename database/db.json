@@ -1,30 +1,30 @@
 {
   "services": {
     "electrician": [
-      { "id": "e1", "name": "AC Maintenance/Repair", "price": 50, "duration": "1-2 Hours" },
-      { "id": "e2", "name": "Fridge/Freezer Repair", "price": 60, "duration": "2 Hours" },
-      { "id": "e3", "name": "Washing Machine Repair", "price": 45, "duration": "1.5 Hours" },
-      { "id": "e4", "name": "Switchboard Installation", "price": 25, "duration": "30 Mins" },
-      { "id": "e5", "name": "Whole House Rewiring", "price": 500, "duration": "1-2 Days" },
-      { "id": "e6", "name": "Generator Service", "price": 70, "duration": "2 Hours" },
-      { "id": "e7", "name": "UPS/Battery Repair", "price": 40, "duration": "1 Hour" },
-      { "id": "e8", "name": "Fan Installation", "price": 20, "duration": "30 Mins" },
-      { "id": "e9", "name": "LCD/TV Mounting", "price": 15, "duration": "30 Mins" },
-      { "id": "e10", "name": "Microwave Oven Repair", "price": 30, "duration": "1 Hour" }
+      { "id": "e1", "name": "AC Maintenance/Repair", "price": 5000, "duration": "1-2 Hours" },
+      { "id": "e2", "name": "Fridge/Freezer Repair", "price": 4500, "duration": "2 Hours" },
+      { "id": "e3", "name": "Washing Machine Repair", "price": 3000, "duration": "1.5 Hours" },
+      { "id": "e4", "name": "Switchboard Installation", "price": 1500, "duration": "30 Mins" },
+      { "id": "e5", "name": "Whole House Rewiring", "price": 45000, "duration": "1-2 Days" },
+      { "id": "e6", "name": "Generator Service", "price": 6000, "duration": "2 Hours" },
+      { "id": "e7", "name": "UPS/Battery Repair", "price": 2500, "duration": "1 Hour" },
+      { "id": "e8", "name": "Fan Installation", "price": 1000, "duration": "30 Mins" },
+      { "id": "e9", "name": "LCD/TV Mounting", "price": 800, "duration": "30 Mins" },
+      { "id": "e10", "name": "Microwave Oven Repair", "price": 2000, "duration": "1 Hour" }
     ],
     "plumber": [
-      { "id": "p1", "name": "Leakage Detection & Fix", "price": 35, "duration": "1 Hour" },
-      { "id": "p2", "name": "Geyser Installation", "price": 80, "duration": "2 Hours" },
-      { "id": "p3", "name": "Tap & Shower Repair", "price": 20, "duration": "30 Mins" },
-      { "id": "p4", "name": "Water Tank Cleaning", "price": 45, "duration": "2-3 Hours" },
-      { "id": "p5", "name": "Drain Blockage Cleaning", "price": 30, "duration": "1 Hour" }
+      { "id": "p1", "name": "Leakage Detection & Fix", "price": 2000, "duration": "1 Hour" },
+      { "id": "p2", "name": "Geyser Installation", "price": 5000, "duration": "2 Hours" },
+      { "id": "p3", "name": "Tap & Shower Repair", "price": 1000, "duration": "30 Mins" },
+      { "id": "p4", "name": "Water Tank Cleaning", "price": 4000, "duration": "2-3 Hours" },
+      { "id": "p5", "name": "Drain Blockage Cleaning", "price": 1800, "duration": "1 Hour" }
     ],
     "carpenter": [
-      { "id": "c1", "name": "Door Lock Replacement", "price": 25, "duration": "45 Mins" },
-      { "id": "c2", "name": "Cabinet Repair", "price": 40, "duration": "1.5 Hours" },
-      { "id": "c3", "name": "Furniture Polishing", "price": 100, "duration": "3-4 Hours" },
-      { "id": "c4", "name": "Window Frame Fixing", "price": 35, "duration": "1 Hour" },
-      { "id": "c5", "name": "Sofa/Bed Repair", "price": 75, "duration": "2-3 Hours" }
+      { "id": "c1", "name": "Door Lock Replacement", "price": 1500, "duration": "45 Mins" },
+      { "id": "c2", "name": "Cabinet Repair", "price": 2500, "duration": "1.5 Hours" },
+      { "id": "c3", "name": "Furniture Polishing", "price": 8000, "duration": "3-4 Hours" },
+      { "id": "c4", "name": "Window Frame Fixing", "price": 2000, "duration": "1 Hour" },
+      { "id": "c5", "name": "Sofa/Bed Repair", "price": 5000, "duration": "2-3 Hours" }
     ]
   },
   "technicians": [
@@ -74,7 +74,7 @@
       "id": "b_initial_1",
       "category": "electrician",
       "taskName": "AC Maintenance/Repair",
-      "price": 50,
+      "price": 5000,
       "technician": "Naveed Almas",
       "date": "2026-05-20",
       "timeSlot": "10:00 AM - 12:00 PM",
@@ -85,7 +85,7 @@
       "id": "b_initial_2",
       "category": "plumber",
       "taskName": "Leakage Detection & Fix",
-      "price": 35,
+      "price": 2000,
       "technician": "Luqman Siddiqui",
       "date": "2026-05-24",
       "timeSlot": "02:00 PM - 03:30 PM",
@@ -94,10 +94,10 @@
     }
   ],
   "budget": [
-    { "id": "bd1", "item": "AC Installation & Service", "category": "Electrician", "allocated": 300, "spent": 50, "status": "In Progress" },
-    { "id": "bd2", "item": "Kitchen Plumbing Remodel", "category": "Plumber", "allocated": 500, "spent": 350, "status": "Completed" },
-    { "id": "bd3", "item": "Custom Wardrobe Cabinets", "category": "Carpenter", "allocated": 1200, "spent": 0, "status": "Planned" },
-    { "id": "bd4", "item": "Living Room Sofa Polish", "category": "Carpenter", "allocated": 200, "spent": 150, "status": "Completed" }
+    { "id": "bd1", "item": "AC Installation & Service", "category": "Electrician", "allocated": 15000, "spent": 5000, "status": "In Progress" },
+    { "id": "bd2", "item": "Kitchen Plumbing Remodel", "category": "Plumber", "allocated": 35000, "spent": 25000, "status": "Completed" },
+    { "id": "bd3", "item": "Custom Wardrobe Cabinets", "category": "Carpenter", "allocated": 85000, "spent": 0, "status": "Planned" },
+    { "id": "bd4", "item": "Living Room Sofa Polish", "category": "Carpenter", "allocated": 15000, "spent": 10000, "status": "Completed" }
   ],
   "chats": {
     "t1": [
