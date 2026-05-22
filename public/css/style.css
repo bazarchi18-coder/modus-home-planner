@@ -30,7 +30,9 @@
   --bg-secondary: #ffffff;
   --bg-tertiary: #f0f3f1;
   --bg-header: rgba(255, 255, 255, 0.85);
-  --bg-tabs: rgba(255, 255, 255, 0.85);
+  --bg-tabs: rgba(255, 255, 255, 0.45);
+  --border-tabs: rgba(255, 255, 255, 0.5);
+  --tab-glow: 0 10px 30px rgba(5, 74, 59, 0.08);
   
   --text-primary: #121c17;
   --text-secondary: #5e6b63;
@@ -56,7 +58,9 @@
   --bg-secondary: #0f1c18;
   --bg-tertiary: #172722;
   --bg-header: rgba(15, 28, 24, 0.85);
-  --bg-tabs: rgba(15, 28, 24, 0.85);
+  --bg-tabs: rgba(12, 24, 20, 0.55);
+  --border-tabs: rgba(255, 255, 255, 0.08);
+  --tab-glow: 0 10px 30px rgba(0, 0, 0, 0.25);
   
   --text-primary: #f1f5f3;
   --text-secondary: #9cb1a5;
@@ -1667,20 +1671,25 @@ body {
 
 .ios-tab-bar {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 64px;
+  bottom: 20px;
+  left: 16px;
+  right: 16px;
+  height: 68px;
   background-color: var(--bg-tabs);
-  border-top: 1px solid var(--tab-border);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-tabs);
+  border-radius: 32px;
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
   display: flex;
   justify-content: space-around;
   align-items: center;
   z-index: 990;
-  padding-bottom: 4px; /* Offset for iOS home indicator bar */
-  transition: background-color var(--transition-normal);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 
+              var(--tab-glow),
+              inset 0 1.5px 0 rgba(255, 255, 255, 0.35),
+              inset 0 -1px 0 rgba(0, 0, 0, 0.04);
+  padding: 0 8px;
+  transition: background-color var(--transition-normal), border var(--transition-normal), box-shadow var(--transition-normal);
 }
 
 .tab-item {
@@ -1688,16 +1697,17 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 3px;
   cursor: pointer;
   flex: 1;
   height: 100%;
-  color: var(--text-tertiary);
+  color: var(--text-secondary);
   transition: color var(--transition-fast);
 }
 
 .tab-item.active {
   color: var(--primary);
+  font-weight: 600;
 }
 
 .tab-icon svg {
@@ -1737,9 +1747,10 @@ body {
   }
   
   .ios-tab-bar {
-    max-width: 598px;
-    left: auto;
+    max-width: 566px;
+    left: 50%;
     right: auto;
+    transform: translateX(-50%);
   }
   
   #chat-room-container {
