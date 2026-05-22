@@ -34,6 +34,66 @@ function writeDB(data) {
 
 // API Routes
 
+// 0. User Authentication & Login Persistence
+app.post('/api/auth/login', (req, res) => {
+  const { name, email, avatar } = req.body;
+  if (!name || !email) {
+    return res.status(400).json({ error: "Missing name or email" });
+  }
+
+  const db = readDB();
+  
+  if (!db.users) db.users = [];
+  
+  // Find or register new user
+  let user = db.users.find(u => u.email === email);
+  if (!user) {
+    user = {
+      id: 'usr_' + Date.now(),
+      name,
+      email,
+      avatar: avatar || '/images/icon.png',
+      createdAt: new Date().toISOString()
+    };
+    db.users.push(user);
+    console.log(`👤 [Google Auth] NEW user registered: ${name} (${email})`);
+  } else {
+    user.name = name;
+    user.avatar = avatar || user.avatar;
+    user.lastLoginAt = new Date().toISOString();
+    console.log(`👤 [Google Auth] Active login session for: ${name} (${email})`);
+  }
+
+  // Persist current active session on server database
+  db.activeSession = {
+    userId: user.id,
+    name: user.name,
+    email: user.email,
+    avatar: user.avatar,
+    loginTime: new Date().toISOString()
+  };
+
+  writeDB(db);
+  res.json({ success: true, user, session: db.activeSession });
+});
+
+// Get current server session
+app.get('/api/auth/session', (req, res) => {
+  const db = readDB();
+  res.json(db.activeSession || null);
+});
+
+// Sign-out session
+app.post('/api/auth/logout', (req, res) => {
+  const db = readDB();
+  if (db.activeSession) {
+    console.log(`👤 [Google Auth] User logged out: ${db.activeSession.email}`);
+  }
+  db.activeSession = null;
+  writeDB(db);
+  res.json({ success: true });
+});
+
 // 1. Get entire catalog services
 app.get('/api/services', (req, res) => {
   const db = readDB();

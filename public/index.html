@@ -20,10 +20,38 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
+  <!-- Google Sign-In SDK -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
   <!-- Core Stylesheet -->
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body class="light-theme">
+  <!-- Dynamic Fullscreen Login / Splash Gate -->
+  <div id="login-gate-screen" class="login-gate-container">
+    <div class="login-gate-content">
+      <div class="login-logo-container">
+        <img src="/images/icon.png" alt="Modus Logo" class="login-glowing-logo">
+      </div>
+      <h1 class="login-brand-title">Modus</h1>
+      <p class="login-brand-tagline">Home Maintenance & Renovation Planner</p>
+      
+      <div class="login-action-box">
+        <!-- Official Google Sign-In Button Container -->
+        <div id="google-signin-btn-wrapper"></div>
+        
+        <button class="login-bypass-btn" onclick="bypassLogin()">
+          Continue as Guest
+        </button>
+      </div>
+      
+      <div class="login-footer">
+        <p>🔒 Secure Sign-In powered by Google Identity</p>
+        <p class="sda-badge">SDA Project Section S • Sir Almas</p>
+      </div>
+    </div>
+  </div>
+
   <!-- Standalone Status Bar Guard (Safe area fill for iOS) -->
   <div class="ios-status-bar-guard"></div>
 
@@ -49,9 +77,18 @@
       
       <!-- 1. HOME VIEW -->
       <section id="home-view" class="app-view active">
-        <div class="welcome-banner">
-          <span class="greeting-subtitle">Your Smart Home Assistant</span>
-          <h2 class="greeting-title">Hello, Luqman</h2>
+        <div class="welcome-banner-row">
+          <div class="welcome-banner-left">
+            <span class="greeting-subtitle">Your Smart Home Assistant</span>
+            <h2 id="home-greeting-title" class="greeting-title">Hello, Guest</h2>
+          </div>
+          <div class="welcome-banner-right">
+            <img id="user-profile-avatar" src="/images/icon.png" alt="Profile" class="user-home-avatar" onclick="toggleSignOutPanel()">
+            <div id="sign-out-tooltip" class="sign-out-panel" style="display: none;">
+              <span id="user-profile-email" class="user-email-lbl">guest@modus.com</span>
+              <button class="logout-btn" onclick="handleSignOut()">Sign Out</button>
+            </div>
+          </div>
         </div>
 
         <!-- Dashboard Metrics Row -->

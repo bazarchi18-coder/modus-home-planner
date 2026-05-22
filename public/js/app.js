@@ -46,9 +46,20 @@ async function initApp() {
     dateInput.min = today;
   }
 
+  // Load User Login Status (PWA Session persistence)
+  const savedUser = localStorage.getItem('modus-user');
+  if (savedUser) {
+    const user = JSON.parse(savedUser);
+    applyUserProfile(user);
+    hideLoginGate();
+  } else {
+    initializeGoogleSignIn();
+  }
+
   // Fetch initial data from APIs
   await refreshAllData();
 }
+
 
 // Global API Refresh
 async function refreshAllData() {
@@ -806,3 +817,134 @@ async function sendChatMessage(event) {
     alert(`Failed to send message: ${error.message}`);
   }
 }
+
+// ==========================================
+// 8. GOOGLE SIGN-IN INTERFACES & PARSERS
+// ==========================================
+
+function initializeGoogleSignIn() {
+  if (typeof google === 'undefined') {
+    // If the Google SDK is still loading, wait 300ms and try again
+    setTimeout(initializeGoogleSignIn, 300);
+    return;
+  }
+  
+  google.accounts.id.initialize({
+    // Standard Project Sandbox Client ID
+    client_id: '957864096057-clt110v45791oipqshn91tcrbfj2fep2.apps.googleusercontent.com',
+    callback: handleCredentialResponse,
+    auto_select: false,
+    cancel_on_tap_outside: true
+  });
+  
+  google.accounts.id.renderButton(
+    document.getElementById('google-signin-btn-wrapper'),
+    { 
+      type: 'standard',
+      theme: 'filled_blue',
+      size: 'large',
+      text: 'continue_with',
+      shape: 'pill',
+      logo_alignment: 'left',
+      width: 240
+    }
+  );
+}
+
+// Handler for verified Google JWT response
+async function handleCredentialResponse(response) {
+  try {
+    const payload = parseJwt(response.credential);
+    const userData = {
+      name: payload.name,
+      email: payload.email,
+      avatar: payload.picture,
+      isLoggedIn: true
+    };
+    
+    // 1. Persist Google User Information on the Server-side Database (db.json)
+    await fetchAPI('/api/auth/login', 'POST', userData);
+    
+    // 2. Save locally for offline PWA session persistence
+    localStorage.setItem('modus-user', JSON.stringify(userData));
+    applyUserProfile(userData);
+    
+    // Smooth transition splash screen out
+    hideLoginGate();
+  } catch (error) {
+    console.error("JWT credential decoding error:", error);
+  }
+}
+
+// Decodes JWT Web Token (JSON payload payload) without external libraries
+function parseJwt(token) {
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(c => 
+    '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+  ).join(''));
+  return JSON.parse(jsonPayload);
+}
+
+function applyUserProfile(userData) {
+  // Personalize greetings
+  const firstName = userData.name.split(' ')[0];
+  document.getElementById('home-greeting-title').textContent = `Hello, ${firstName}`;
+  
+  // Dynamic header profile picture updates
+  const avatarEl = document.getElementById('user-profile-avatar');
+  avatarEl.src = userData.avatar;
+  
+  // Set tooltip details
+  document.getElementById('user-profile-email').textContent = userData.email;
+}
+
+async function bypassLogin() {
+  const guestData = {
+    name: 'Guest User',
+    email: 'guest@modus.com',
+    avatar: '/images/icon.png',
+    isLoggedIn: true
+  };
+  
+  try {
+    // Persist Guest login in server database
+    await fetchAPI('/api/auth/login', 'POST', guestData);
+  } catch (e) {
+    console.warn("Server login offline, bypassing to local offline mode.");
+  }
+  
+  localStorage.setItem('modus-user', JSON.stringify(guestData));
+  applyUserProfile(guestData);
+  hideLoginGate();
+}
+
+function hideLoginGate() {
+  const gate = document.getElementById('login-gate-screen');
+  gate.classList.add('fade-out');
+}
+
+function showLoginGate() {
+  const gate = document.getElementById('login-gate-screen');
+  gate.classList.remove('fade-out');
+  initializeGoogleSignIn();
+}
+
+function toggleSignOutPanel() {
+  const panel = document.getElementById('sign-out-tooltip');
+  panel.style.display = panel.style.display === 'none' ? 'flex' : 'none';
+}
+
+async function handleSignOut() {
+  try {
+    // Clear active session from server database
+    await fetchAPI('/api/auth/logout', 'POST');
+  } catch (e) {
+    console.warn("Server logout request failed.");
+  }
+  
+  localStorage.removeItem('modus-user');
+  toggleSignOutPanel();
+  showLoginGate();
+}
+

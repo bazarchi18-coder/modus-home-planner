@@ -1750,3 +1750,195 @@ body {
     border-right: 1px solid var(--border);
   }
 }
+
+/* ========================================================
+   MODUS: GOOGLE LOGIN GATE & AVATAR STYLING
+   ======================================================== */
+
+.login-gate-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #054A3B 0%, #08110e 100%);
+  z-index: 2000; /* Over everything */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+}
+
+.login-gate-container.fade-out {
+  opacity: 0;
+  transform: scale(1.05);
+  pointer-events: none;
+}
+
+.login-gate-content {
+  text-align: center;
+  max-width: 360px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
+.login-logo-container {
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.login-glowing-logo {
+  width: 96px;
+  height: 96px;
+  border-radius: 22px;
+  box-shadow: 0 0 35px rgba(14, 166, 130, 0.4), 0 4px 15px rgba(0,0,0,0.3);
+  animation: logoPulse 2.5s infinite ease-in-out;
+}
+
+@keyframes logoPulse {
+  0% { transform: scale(1); box-shadow: 0 0 30px rgba(14, 166, 130, 0.3); }
+  50% { transform: scale(1.03); box-shadow: 0 0 45px rgba(14, 166, 130, 0.5); }
+  100% { transform: scale(1); box-shadow: 0 0 30px rgba(14, 166, 130, 0.3); }
+}
+
+.login-brand-title {
+  font-family: var(--font-brand);
+  font-size: 38px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 6px;
+  background: linear-gradient(to bottom, #ffffff, #88bba8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.login-brand-tagline {
+  font-size: 14px;
+  color: var(--text-secondary);
+  opacity: 0.85;
+  margin-bottom: 48px;
+  font-weight: 500;
+}
+
+.login-action-box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+#google-signin-btn-wrapper {
+  min-height: 40px;
+  width: 240px;
+  display: flex;
+  justify-content: center;
+}
+
+.login-bypass-btn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 8px 16px;
+  transition: color var(--transition-fast);
+}
+
+.login-bypass-btn:active {
+  color: white;
+}
+
+.login-footer {
+  margin-top: auto;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+  line-height: 1.6;
+}
+
+.sda-badge {
+  margin-top: 4px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* Home Welcome Row & Profile Tools */
+.welcome-banner-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.welcome-banner-left {
+  flex: 1;
+}
+
+.welcome-banner-right {
+  position: relative;
+  margin-left: 16px;
+}
+
+.user-home-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2.5px solid var(--primary);
+  box-shadow: var(--shadow-light);
+  cursor: pointer;
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.user-home-avatar:active {
+  transform: scale(0.92);
+}
+
+.sign-out-panel {
+  position: absolute;
+  top: 56px;
+  right: 0;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  width: 180px;
+  box-shadow: var(--shadow-medium);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: slideFadeDown 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.user-email-lbl {
+  font-size: 11px;
+  color: var(--text-secondary);
+  word-break: break-all;
+  text-align: center;
+}
+
+.logout-btn {
+  background-color: var(--danger);
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+}
+
+.logout-btn:active {
+  opacity: 0.85;
+}
+
