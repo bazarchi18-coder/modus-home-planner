@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Primary initialization
 async function initApp() {
   // Load Theme
-  const savedTheme = localStorage.getItem('modus-theme') || 'light-theme';
+  const savedTheme = localStorage.getItem('fixmate-theme') || 'light-theme';
   document.body.className = savedTheme;
 
   // Set default minimum date to today for scheduler
@@ -47,7 +47,7 @@ async function initApp() {
   }
 
   // Load User Login Status (PWA Session persistence)
-  const savedUser = localStorage.getItem('modus-user');
+  const savedUser = localStorage.getItem('fixmate-user');
   if (savedUser) {
     const user = JSON.parse(savedUser);
     applyUserProfile(user);
@@ -110,10 +110,10 @@ function setupEventListeners() {
   themeToggle.addEventListener('click', () => {
     if (document.body.classList.contains('light-theme')) {
       document.body.classList.replace('light-theme', 'dark-theme');
-      localStorage.setItem('modus-theme', 'dark-theme');
+      localStorage.setItem('fixmate-theme', 'dark-theme');
     } else {
       document.body.classList.replace('dark-theme', 'light-theme');
-      localStorage.setItem('modus-theme', 'light-theme');
+      localStorage.setItem('fixmate-theme', 'light-theme');
     }
   });
 
@@ -868,8 +868,8 @@ async function handleCredentialResponse(response) {
     await fetchAPI('/api/auth/login', 'POST', userData);
     
     // 2. Save locally for offline PWA session persistence
-    localStorage.setItem('modus-user', JSON.stringify(userData));
-    localStorage.setItem('modus-session-token', rawSessionToken);
+    localStorage.setItem('fixmate-user', JSON.stringify(userData));
+    localStorage.setItem('fixmate-session-token', rawSessionToken);
     
     console.log("🔑 [Session Token] Successfully fetched Google JWT ID Token:", rawSessionToken);
     
@@ -892,6 +892,7 @@ function parseJwt(token) {
   return JSON.parse(jsonPayload);
 }
 
+// Apply Profile Info
 function applyUserProfile(userData) {
   // Personalize greetings
   const firstName = userData.name.split(' ')[0];
@@ -909,7 +910,7 @@ async function bypassLogin() {
   const mockToken = 'mock_session_token_guest_' + Math.random().toString(36).substring(2, 15);
   const guestData = {
     name: 'Guest User',
-    email: 'guest@modus.com',
+    email: 'guest@fixmate.com',
     avatar: '/images/icon.png',
     isLoggedIn: true,
     sessionToken: mockToken
@@ -922,8 +923,8 @@ async function bypassLogin() {
     console.warn("Server login offline, bypassing to local offline mode.");
   }
   
-  localStorage.setItem('modus-user', JSON.stringify(guestData));
-  localStorage.setItem('modus-session-token', mockToken);
+  localStorage.setItem('fixmate-user', JSON.stringify(guestData));
+  localStorage.setItem('fixmate-session-token', mockToken);
   
   console.log("🔑 [Session Token] Generated guest mock session token:", mockToken);
   
@@ -955,8 +956,8 @@ async function handleSignOut() {
     console.warn("Server logout request failed.");
   }
   
-  localStorage.removeItem('modus-user');
-  localStorage.removeItem('modus-session-token');
+  localStorage.removeItem('fixmate-user');
+  localStorage.removeItem('fixmate-session-token');
   toggleSignOutPanel();
   showLoginGate();
 }

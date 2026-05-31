@@ -1,7 +1,7 @@
 {
-  "name": "Modus",
-  "short_name": "Modus",
-  "description": "Modus - Premium Home Maintenance & Renovation Planner",
+  "name": "FixMate",
+  "short_name": "FixMate",
+  "description": "FixMate - Premium Home Maintenance & Renovation Planner",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",

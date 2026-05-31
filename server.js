@@ -131,7 +131,7 @@ app.post('/api/auth/reset', (req, res) => {
     technicians: [
       {
         "id": "t1",
-        "name": "Rizwan Khan",
+        "name": "Asif Raza",
         "category": "electrician",
         "rating": 4.9,
         "reviews": 128,
@@ -141,7 +141,7 @@ app.post('/api/auth/reset', (req, res) => {
       },
       {
         "id": "t2",
-        "name": "Tariq Mahmood",
+        "name": "Yasir Iqbal",
         "category": "plumber",
         "rating": 4.8,
         "reviews": 95,
@@ -151,7 +151,7 @@ app.post('/api/auth/reset', (req, res) => {
       },
       {
         "id": "t3",
-        "name": "Sajid Ali",
+        "name": "Zahid Hussain",
         "category": "carpenter",
         "rating": 4.7,
         "reviews": 82,
@@ -161,7 +161,7 @@ app.post('/api/auth/reset', (req, res) => {
       },
       {
         "id": "t4",
-        "name": "Kamran Shah",
+        "name": "Bilal Ahmed",
         "category": "electrician",
         "rating": 4.9,
         "reviews": 110,
@@ -176,7 +176,7 @@ app.post('/api/auth/reset', (req, res) => {
         "category": "electrician",
         "taskName": "AC Maintenance/Repair",
         "price": 5000,
-        "technician": "Rizwan Khan",
+        "technician": "Asif Raza",
         "date": "2026-05-20",
         "timeSlot": "10:00 AM - 12:00 PM",
         "status": "Completed",
@@ -187,7 +187,7 @@ app.post('/api/auth/reset', (req, res) => {
         "category": "plumber",
         "taskName": "Leakage Detection & Fix",
         "price": 2000,
-        "technician": "Tariq Mahmood",
+        "technician": "Yasir Iqbal",
         "date": "2026-05-24",
         "timeSlot": "02:00 PM - 03:30 PM",
         "status": "Assigned",
@@ -202,12 +202,12 @@ app.post('/api/auth/reset', (req, res) => {
     ],
     chats: {
       "t1": [
-        { "sender": "technician", "text": "Hello! I am Rizwan Khan, your assigned electrician. How can I help you with your AC today?", "time": "2026-05-20T09:30:00.000Z" },
-        { "sender": "user", "text": "Hi Rizwan! It's making a strange humming sound when it starts.", "time": "2026-05-20T09:32:00.000Z" },
+        { "sender": "technician", "text": "Hello! I am Asif Raza, your assigned electrician. How can I help you with your AC today?", "time": "2026-05-20T09:30:00.000Z" },
+        { "sender": "user", "text": "Hi Asif! It's making a strange humming sound when it starts.", "time": "2026-05-20T09:32:00.000Z" },
         { "sender": "technician", "text": "Got it. That's usually a capacitor issue or fan motor block. I'll inspect it during our scheduled slot.", "time": "2026-05-20T09:33:00.000Z" }
       ],
       "t2": [
-        { "sender": "technician", "text": "Hi there! I am Tariq. I see we have a tap leakage fix tomorrow at 2:00 PM. Please confirm the address is correct.", "time": "2026-05-22T15:00:00.000Z" },
+        { "sender": "technician", "text": "Hi there! I am Yasir. I see we have a tap leakage fix tomorrow at 2:00 PM. Please confirm the address is correct.", "time": "2026-05-22T15:00:00.000Z" },
         { "sender": "user", "text": "Yes, the address is exactly correct. Thank you!", "time": "2026-05-22T15:10:00.000Z" }
       ],
       "t3": [],
