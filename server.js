@@ -222,6 +222,71 @@ app.get('/api/chat/:techId', (req, res) => {
   res.json(chatHistory);
 });
 
+// Helper to generate highly realistic context-aware replies from technicians
+function generateAIResponse(userText, techName, category) {
+  const text = userText.toLowerCase().trim();
+  
+  // Greetings
+  if (text.includes("hello") || text.includes("hi") || text.includes("hey") || text.includes("assalam") || text.includes("salam")) {
+    return `Walaikum Assalam! I hope you are doing well. This is ${techName}, your assigned ${category}. How can I assist you with your home project today?`;
+  }
+  
+  // Thanks
+  if (text.includes("thank") || text.includes("shukriya") || text.includes("welcome")) {
+    return `You're most welcome! It is my pleasure. Let me know if you need any other help with the service.`;
+  }
+
+  // Pricing, PKR Currency, and Standard Rates
+  if (text.includes("price") || text.includes("rate") || text.includes("cost") || text.includes("charge") || text.includes("expensive") || text.includes("fee") || text.includes("rs") || text.includes("rupee") || text.includes("pkr")) {
+    return `Regarding the cost, all our fees are standard rates regulated directly by Modus. My visiting fee is fully included in the standard rate, and there are absolutely no hidden charges. You can pay me easily in cash or via mobile transfer (JazzCash/Easypaisa) once the job is fully done!`;
+  }
+
+  // Scheduling, Timings, Arriving
+  if (text.includes("time") || text.includes("when") || text.includes("delay") || text.includes("reach") || text.includes("late") || text.includes("schedule") || text.includes("clock") || text.includes("arrive") || text.includes("slot")) {
+    return `Punctuality is very important to me! I will reach your address exactly during our scheduled time slot. I will also give you a phone call 15 minutes before I reach, so you know I'm on my way.`;
+  }
+
+  // Address and Locations
+  if (text.includes("address") || text.includes("location") || text.includes("where") || text.includes("area") || text.includes("house") || text.includes("street")) {
+    return `Yes, I have noted down the address details provided in your booking. I am very familiar with the local routes and sectors, so I will find your home easily.`;
+  }
+
+  // Tools, materials, parts
+  if (text.includes("tool") || text.includes("material") || text.includes("wire") || text.includes("pipe") || text.includes("wood") || text.includes("lock") || text.includes("spare") || text.includes("part")) {
+    return `Don't worry at all! I will bring all my professional diagnostic instruments, ladder, and heavy tools myself. If any spare parts (like specific pipes, standard wires, or board locks) are needed, I can purchase high-quality local materials for you, and we can adjust that in the bill.`;
+  }
+
+  // Service Guarantees / Trust
+  if (text.includes("guarantee") || text.includes("warranty") || text.includes("trust") || text.includes("honest") || text.includes("perfect") || text.includes("satisfy") || text.includes("complaint")) {
+    return `Customer satisfaction is our utmost priority at Modus! All my work comes with a 30-day Modus service warranty. If anything goes wrong or isn't up to your standard, we will come back and fix it free of cost. You are in safe hands!`;
+  }
+
+  // Category Specific Default Fallbacks
+  if (category === "electrician") {
+    const electricianReplies = [
+      `I've noted that down. AC compressors, short circuits, or wiring issues can sometimes be tricky, but I will thoroughly inspect the capacitor, voltage stabilizers, and main DB boards to isolate the issue.`,
+      `Got it! Electric problems should be handled carefully. I will check the load balances and switchboards when I arrive. See you soon!`,
+      `Understood. I will bring my digital multimeter and wire checkers. I'll make sure everything is completely safe and double-checked before I leave.`
+    ];
+    return electricianReplies[Math.floor(Math.random() * electricianReplies.length)];
+  } else if (category === "plumber") {
+    const plumberReplies = [
+      `That makes sense. Water pressure issues, blockages, or tap leakages are very common. I'll inspect the main valves, gaskets, and concealed PPR piping to solve it permanently.`,
+      `Concealed pipeline leaks can cause dampness in walls. I will bring leak detection tools and heavy piping sealants to make sure it's fully secure.`,
+      `Understood! I'll inspect the tap threads and geyser valves carefully to stop any leaks. I will bring standard replacement fittings just in case.`
+    ];
+    return plumberReplies[Math.floor(Math.random() * plumberReplies.length)];
+  } else {
+    // Carpenter
+    const carpenterReplies = [
+      `I understand. Wood warping, cabinet hinge issues, or door lock alignments are easily fixable. I'll inspect the timber quality and bring premium replacement hinges/aligners.`,
+      `Got it! I will bring sandpapers, wood glues, alignment screws, and my polish kit. I will restore the wood surface and make sure the door handles operate smoothly.`,
+      `Understood! Furniture joints can loosen over time. I'll re-glue, clamp, and reinforce the frames when I arrive so they are as strong as new.`
+    ];
+    return carpenterReplies[Math.floor(Math.random() * carpenterReplies.length)];
+  }
+}
+
 // 9. Send message to technician (and trigger auto-reply)
 app.post('/api/chat/:techId', (req, res) => {
   const { techId } = req.params;
@@ -252,28 +317,23 @@ app.post('/api/chat/:techId', (req, res) => {
   setTimeout(() => {
     const liveDb = readDB();
     const technician = liveDb.technicians.find(t => t.id === techId);
+    
     const techName = technician ? technician.name : "Technician";
-
-    const replies = [
-      `Thanks for letting me know! I've noted that down and will bring the required tools.`,
-      `Perfect. I am on my way to prepare materials for this. See you soon!`,
-      `Got it! Let me know if there's anything else I should know before I arrive.`,
-      `That sounds good. I will check that immediately when I arrive.`,
-      `Understood. I will call you 15 minutes before I reach your location.`
-    ];
-
-    const randomReply = replies[Math.floor(Math.random() * replies.length)];
+    const category = technician ? technician.category : "expert";
+    
+    // Generate context-aware response
+    const replyText = generateAIResponse(text, techName, category);
 
     const techMsg = {
       sender: "technician",
-      text: randomReply,
+      text: replyText,
       time: new Date().toISOString()
     };
 
     if (!liveDb.chats[techId]) liveDb.chats[techId] = [];
     liveDb.chats[techId].push(techMsg);
     writeDB(liveDb);
-    console.log(`[Chat Mock] Automated reply added from ${techName} for chat ${techId}`);
+    console.log(`[Chat AI] Intelligent reply added from ${techName} for chat ${techId}`);
   }, 1500);
 });
 
