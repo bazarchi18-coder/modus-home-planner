@@ -97,6 +97,131 @@ app.post('/api/auth/logout', (req, res) => {
   res.json({ success: true });
 });
 
+// Reset application database back to initial seed defaults
+app.post('/api/auth/reset', (req, res) => {
+  const defaultDB = {
+    services: {
+      electrician: [
+        { "id": "e1", "name": "AC Maintenance/Repair", "price": 5000, "duration": "1-2 Hours" },
+        { "id": "e2", "name": "Fridge/Freezer Repair", "price": 4500, "duration": "2 Hours" },
+        { "id": "e3", "name": "Washing Machine Repair", "price": 3000, "duration": "1.5 Hours" },
+        { "id": "e4", "name": "Switchboard Installation", "price": 1500, "duration": "30 Mins" },
+        { "id": "e5", "name": "Whole House Rewiring", "price": 45000, "duration": "1-2 Days" },
+        { "id": "e6", "name": "Generator Service", "price": 6000, "duration": "2 Hours" },
+        { "id": "e7", "name": "UPS/Battery Repair", "price": 2500, "duration": "1 Hour" },
+        { "id": "e8", "name": "Fan Installation", "price": 1000, "duration": "30 Mins" },
+        { "id": "e9", "name": "LCD/TV Mounting", "price": 800, "duration": "30 Mins" },
+        { "id": "e10", "name": "Microwave Oven Repair", "price": 2000, "duration": "1 Hour" }
+      ],
+      plumber: [
+        { "id": "p1", "name": "Leakage Detection & Fix", "price": 2000, "duration": "1 Hour" },
+        { "id": "p2", "name": "Geyser Installation", "price": 5000, "duration": "2 Hours" },
+        { "id": "p3", "name": "Tap & Shower Repair", "price": 1000, "duration": "30 Mins" },
+        { "id": "p4", "name": "Water Tank Cleaning", "price": 4000, "duration": "2-3 Hours" },
+        { "id": "p5", "name": "Drain Blockage Cleaning", "price": 1800, "duration": "1 Hour" }
+      ],
+      carpenter: [
+        { "id": "c1", "name": "Door Lock Replacement", "price": 1500, "duration": "45 Mins" },
+        { "id": "c2", "name": "Cabinet Repair", "price": 2500, "duration": "1.5 Hours" },
+        { "id": "c3", "name": "Furniture Polishing", "price": 8000, "duration": "3-4 Hours" },
+        { "id": "c4", "name": "Window Frame Fixing", "price": 2000, "duration": "1 Hour" },
+        { "id": "c5", "name": "Sofa/Bed Repair", "price": 5000, "duration": "2-3 Hours" }
+      ]
+    },
+    technicians: [
+      {
+        "id": "t1",
+        "name": "Rizwan Khan",
+        "category": "electrician",
+        "rating": 4.9,
+        "reviews": 128,
+        "status": "Available",
+        "avatar": "/images/naveed.png",
+        "bio": "Certified industrial electrician with 8+ years of experience in smart-home upgrades and household wiring."
+      },
+      {
+        "id": "t2",
+        "name": "Tariq Mahmood",
+        "category": "plumber",
+        "rating": 4.8,
+        "reviews": 95,
+        "status": "Available",
+        "avatar": "/images/luqman.png",
+        "bio": "Expert in sanitary fittings, pressure leak solutions, and standard geyser maintenance."
+      },
+      {
+        "id": "t3",
+        "name": "Sajid Ali",
+        "category": "carpenter",
+        "rating": 4.7,
+        "reviews": 82,
+        "status": "Available",
+        "avatar": "/images/akbar.png",
+        "bio": "Specialist in fine wood furniture repair, cabinet manufacturing, and dynamic lock repairs."
+      },
+      {
+        "id": "t4",
+        "name": "Kamran Shah",
+        "category": "electrician",
+        "rating": 4.9,
+        "reviews": 110,
+        "status": "Available",
+        "avatar": "/images/abdullah.png",
+        "bio": "Expert home appliance repairman specializing in AC installation, fridge repairs, and electronic maintenance."
+      }
+    ],
+    bookings: [
+      {
+        "id": "b_initial_1",
+        "category": "electrician",
+        "taskName": "AC Maintenance/Repair",
+        "price": 5000,
+        "technician": "Rizwan Khan",
+        "date": "2026-05-20",
+        "timeSlot": "10:00 AM - 12:00 PM",
+        "status": "Completed",
+        "createdAt": "2026-05-19T10:15:00.000Z"
+      },
+      {
+        "id": "b_initial_2",
+        "category": "plumber",
+        "taskName": "Leakage Detection & Fix",
+        "price": 2000,
+        "technician": "Tariq Mahmood",
+        "date": "2026-05-24",
+        "timeSlot": "02:00 PM - 03:30 PM",
+        "status": "Assigned",
+        "createdAt": "2026-05-22T14:30:00.000Z"
+      }
+    ],
+    budget: [
+      { "id": "bd1", "item": "AC Installation & Service", "category": "Electrician", "allocated": 15000, "spent": 5000, "status": "In Progress" },
+      { "id": "bd2", "item": "Kitchen Plumbing Remodel", "category": "Plumber", "allocated": 35000, "spent": 25000, "status": "Completed" },
+      { "id": "bd3", "item": "Custom Wardrobe Cabinets", "category": "Carpenter", "allocated": 85000, "spent": 0, "status": "Planned" },
+      { "id": "bd4", "item": "Living Room Sofa Polish", "category": "Carpenter", "allocated": 15000, "spent": 10000, "status": "Completed" }
+    ],
+    chats: {
+      "t1": [
+        { "sender": "technician", "text": "Hello! I am Rizwan Khan, your assigned electrician. How can I help you with your AC today?", "time": "2026-05-20T09:30:00.000Z" },
+        { "sender": "user", "text": "Hi Rizwan! It's making a strange humming sound when it starts.", "time": "2026-05-20T09:32:00.000Z" },
+        { "sender": "technician", "text": "Got it. That's usually a capacitor issue or fan motor block. I'll inspect it during our scheduled slot.", "time": "2026-05-20T09:33:00.000Z" }
+      ],
+      "t2": [
+        { "sender": "technician", "text": "Hi there! I am Tariq. I see we have a tap leakage fix tomorrow at 2:00 PM. Please confirm the address is correct.", "time": "2026-05-22T15:00:00.000Z" },
+        { "sender": "user", "text": "Yes, the address is exactly correct. Thank you!", "time": "2026-05-22T15:10:00.000Z" }
+      ],
+      "t3": [],
+      "t4": []
+    },
+    users: [],
+    activeSession: null
+  };
+
+  writeDB(defaultDB);
+  console.log(`🧹 [Server DB] Application database hard-reset successfully.`);
+  res.json({ success: true, message: "Database reset successfully" });
+});
+
 // 1. Get entire catalog services
 app.get('/api/services', (req, res) => {
   const db = readDB();

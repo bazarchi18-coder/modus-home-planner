@@ -961,3 +961,22 @@ async function handleSignOut() {
   showLoginGate();
 }
 
+async function handleGlobalReset() {
+  if (!confirm("⚠️ WARNING: This will completely reset the application database. All your booked services, budget items, and chat logs will be permanently deleted and restored to initial clean defaults.\n\nAre you sure you want to proceed?")) return;
+
+  try {
+    // 1. Call server API to reset the database file
+    await fetchAPI('/api/auth/reset', 'POST');
+
+    // 2. Clear browser localStorage to reset user states
+    localStorage.clear();
+
+    alert("🧹 App records and budget database have been reset successfully! The page will now reload.");
+    
+    // 3. Reload the application
+    window.location.reload();
+  } catch (error) {
+    alert(`Reset failed: ${error.message}`);
+  }
+}
+

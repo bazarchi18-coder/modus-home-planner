@@ -1953,3 +1953,20 @@ body {
   opacity: 0.85;
 }
 
+.reset-app-btn {
+  background-color: transparent;
+  color: var(--danger);
+  border: 1px solid var(--danger);
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.reset-app-btn:active {
+  background-color: var(--danger);
+  color: white;
+}
+

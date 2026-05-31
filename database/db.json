@@ -30,7 +30,7 @@
   "technicians": [
     {
       "id": "t1",
-      "name": "Naveed Almas",
+      "name": "Rizwan Khan",
       "category": "electrician",
       "rating": 4.9,
       "reviews": 128,
@@ -40,7 +40,7 @@
     },
     {
       "id": "t2",
-      "name": "Luqman Siddiqui",
+      "name": "Tariq Mahmood",
       "category": "plumber",
       "rating": 4.8,
       "reviews": 95,
@@ -50,7 +50,7 @@
     },
     {
       "id": "t3",
-      "name": "Ali Akbar",
+      "name": "Sajid Ali",
       "category": "carpenter",
       "rating": 4.7,
       "reviews": 82,
@@ -60,7 +60,7 @@
     },
     {
       "id": "t4",
-      "name": "Abdullah Tahir",
+      "name": "Kamran Shah",
       "category": "electrician",
       "rating": 4.9,
       "reviews": 110,
@@ -75,7 +75,7 @@
       "category": "electrician",
       "taskName": "AC Maintenance/Repair",
       "price": 5000,
-      "technician": "Naveed Almas",
+      "technician": "Rizwan Khan",
       "date": "2026-05-20",
       "timeSlot": "10:00 AM - 12:00 PM",
       "status": "Completed",
@@ -86,7 +86,7 @@
       "category": "plumber",
       "taskName": "Leakage Detection & Fix",
       "price": 2000,
-      "technician": "Luqman Siddiqui",
+      "technician": "Tariq Mahmood",
       "date": "2026-05-24",
       "timeSlot": "02:00 PM - 03:30 PM",
       "status": "Assigned",
@@ -101,12 +101,12 @@
   ],
   "chats": {
     "t1": [
-      { "sender": "technician", "text": "Hello! I am Naveed Almas, your assigned electrician. How can I help you with your AC today?", "time": "2026-05-20T09:30:00.000Z" },
-      { "sender": "user", "text": "Hi Naveed! It's making a strange humming sound when it starts.", "time": "2026-05-20T09:32:00.000Z" },
+      { "sender": "technician", "text": "Hello! I am Rizwan Khan, your assigned electrician. How can I help you with your AC today?", "time": "2026-05-20T09:30:00.000Z" },
+      { "sender": "user", "text": "Hi Rizwan! It's making a strange humming sound when it starts.", "time": "2026-05-20T09:32:00.000Z" },
       { "sender": "technician", "text": "Got it. That's usually a capacitor issue or fan motor block. I'll inspect it during our scheduled slot.", "time": "2026-05-20T09:33:00.000Z" }
     ],
     "t2": [
-      { "sender": "technician", "text": "Hi there! I am Luqman. I see we have a tap leakage fix tomorrow at 2:00 PM. Please confirm the address is correct.", "time": "2026-05-22T15:00:00.000Z" },
+      { "sender": "technician", "text": "Hi there! I am Tariq. I see we have a tap leakage fix tomorrow at 2:00 PM. Please confirm the address is correct.", "time": "2026-05-22T15:00:00.000Z" },
       { "sender": "user", "text": "Yes, the address is exactly correct. Thank you!", "time": "2026-05-22T15:10:00.000Z" }
     ],
     "t3": [],
