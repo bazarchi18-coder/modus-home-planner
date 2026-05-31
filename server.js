@@ -363,7 +363,7 @@ function generateAIResponse(userText, techName, category) {
 
   // Pricing, PKR Currency, and Standard Rates
   if (text.includes("price") || text.includes("rate") || text.includes("cost") || text.includes("charge") || text.includes("expensive") || text.includes("fee") || text.includes("rs") || text.includes("rupee") || text.includes("pkr")) {
-    return `Regarding the cost, all our fees are standard rates regulated directly by Modus. My visiting fee is fully included in the standard rate, and there are absolutely no hidden charges. You can pay me easily in cash or via mobile transfer (JazzCash/Easypaisa) once the job is fully done!`;
+    return `Regarding the cost, all our fees are standard rates regulated directly by FixMate. My visiting fee is fully included in the standard rate, and there are absolutely no hidden charges. You can pay me easily in cash or via mobile transfer (JazzCash/Easypaisa) once the job is fully done!`;
   }
 
   // Scheduling, Timings, Arriving
@@ -383,7 +383,7 @@ function generateAIResponse(userText, techName, category) {
 
   // Service Guarantees / Trust
   if (text.includes("guarantee") || text.includes("warranty") || text.includes("trust") || text.includes("honest") || text.includes("perfect") || text.includes("satisfy") || text.includes("complaint")) {
-    return `Customer satisfaction is our utmost priority at Modus! All my work comes with a 30-day Modus service warranty. If anything goes wrong or isn't up to your standard, we will come back and fix it free of cost. You are in safe hands!`;
+    return `Customer satisfaction is our utmost priority at FixMate! All my work comes with a 30-day FixMate service warranty. If anything goes wrong or isn't up to your standard, we will come back and fix it free of cost. You are in safe hands!`;
   }
 
   // Category Specific Default Fallbacks

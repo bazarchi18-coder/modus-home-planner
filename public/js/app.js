@@ -1,5 +1,5 @@
 /* ========================================================
-   MODUS: PREMIUM PWA CORE LOGICS (Vanilla JS)
+   FIXMATE: PREMIUM PWA CORE LOGICS (Vanilla JS)
    ======================================================== */
 
 // Global Application State
